@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :cell_automatons
+  resources :lifegames
+  get 'cell_automatons/show_cell/:id' => 'cell_automatons#show_cell', as: :show_cell
   get 'play/index'
 
   # The priority is based upon order of creation: first created -> highest priority.

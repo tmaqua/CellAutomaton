@@ -1,18 +1,84 @@
 require "open3"
 
-class PlayController < ApplicationController
-  def index
-    id = 9
-    size = 25
-    step = 25
+class CellAutomatonsController < ApplicationController
+  before_action :set_cell_automaton, only: [:show, :show_cell, :edit, :update, :destroy]
 
-    gon.array = execute_ruby_file(id)
-    gon.rowNum = size
-    gon.columnNum = size
-    gon.step = step+1
+  # GET /cell_automatons
+  def index
+    @cell_automatons = CellAutomaton.all
+  end
+
+  # GET /cell_automatons/1
+  def show
+  end
+
+  def show_cell
+    gon.array = execute_ruby_file(@cell_automaton.id)
+    gon.rowNum = @cell_automaton.board_size
+    gon.columnNum = @cell_automaton.board_size
+    gon.step = @cell_automaton.step+1
+  end
+
+  # GET /cell_automatons/new
+  def new
+    @cell_automaton = CellAutomaton.new
+  end
+
+  # GET /cell_automatons/1/edit
+  def edit
+  end
+
+  # POST /cell_automatons
+  # POST /cell_automatons.json
+  def create
+    @cell_automaton = CellAutomaton.new(cell_automaton_params)
+
+    respond_to do |format|
+      if @cell_automaton.save
+        format.html { redirect_to @cell_automaton, notice: 'Cell automaton was successfully created.' }
+        format.json { render :show, status: :created, location: @cell_automaton }
+      else
+        format.html { render :new }
+        format.json { render json: @cell_automaton.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # PATCH/PUT /cell_automatons/1
+  # PATCH/PUT /cell_automatons/1.json
+  def update
+    respond_to do |format|
+      if @cell_automaton.update(cell_automaton_params)
+        format.html { redirect_to @cell_automaton, notice: 'Cell automaton was successfully updated.' }
+        format.json { render :show, status: :ok, location: @cell_automaton }
+      else
+        format.html { render :edit }
+        format.json { render json: @cell_automaton.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # DELETE /cell_automatons/1
+  # DELETE /cell_automatons/1.json
+  def destroy
+    @cell_automaton.destroy
+    respond_to do |format|
+      format.html { redirect_to cell_automatons_url, notice: 'Cell automaton was successfully destroyed.' }
+      format.json { head :no_content }
+    end
   end
 
   private
+    # Use callbacks to share common setup or constraints between actions.
+    def set_cell_automaton
+      @cell_automaton = CellAutomaton.find(params[:id])
+    end
+
+    # Never trust parameters from the scary internet, only allow the white list through.
+    def cell_automaton_params
+      params.require(:cell_automaton).permit(:name, :board_size, :step, :state_num, :init_type, :neighbor_rule)
+    end
+
     def execute_ruby_file(file_name)
       File.write("#{file_name}.rb", gen_str_function)
       out, err, status = Open3.capture3("ruby #{file_name}.rb")
@@ -90,25 +156,15 @@ class PlayController < ApplicationController
       end
 
       def judge_next_state(state_count, now_state)
-        if now_state == 0 && (state_count >= 3 && state_count <= 3) # 誕生
-          1
-        elsif now_state == 1 && (state_count >= 2 && state_count <= 3) # 維持
-          1
-        else # 死
-          0
-        end
+        #{@cell_automaton.neighbor_rule}
       end
 
-      size = 25
-      step = 25
+      size = #{@cell_automaton.board_size}
+      step = #{@cell_automaton.step}
       result = calc_automaton(board_init(size), step, size)
       print_array(result)
       "
 
       str
     end
-
-
-
-
 end

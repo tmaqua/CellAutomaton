@@ -1,0 +1,35 @@
+h1 Listing lifegames
+
+table
+  thead
+    tr
+      th ボードサイズ(X*X)
+      th ステップ数
+      th 状態数
+      th セル周辺の範囲(1:-> (x-1,y-1)~(x+1,y+1))
+      th 誕生に必要なセルの数(下限)
+      th 誕生に必要なセルの数(上限)
+      th 生存に必要なセルの数(下限)
+      th 生存に必要なセルの数(上限)
+      th
+      th
+      th
+
+  tbody
+    - @lifegames.each do |lifegame|
+      tr
+        td = lifegame.board_size
+        td = lifegame.step
+        td = lifegame.state_num
+        td = lifegame.state_count_range
+        td = lifegame.live_count_min
+        td = lifegame.live_count_max
+        td = lifegame.retention_count_min
+        td = lifegame.retention_count_max
+        td = link_to 'Show', lifegame
+        td = link_to 'Edit', edit_lifegame_path(lifegame)
+        td = link_to 'Destroy', lifegame, data: {:confirm => 'Are you sure?'}, :method => :delete
+
+br
+
+= link_to 'New Lifegame', new_lifegame_path

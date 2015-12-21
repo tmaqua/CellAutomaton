@@ -1,47 +1,4 @@
-require "open3"
 
-class PlayController < ApplicationController
-  def index
-    id = 9
-    size = 25
-    step = 25
-
-    gon.array = execute_ruby_file(id)
-    gon.rowNum = size
-    gon.columnNum = size
-    gon.step = step+1
-  end
-
-  private
-    def execute_ruby_file(file_name)
-      File.write("#{file_name}.rb", gen_str_function)
-      out, err, status = Open3.capture3("ruby #{file_name}.rb")
-      stdstr_to_array(out)
-    end
-
-    def stdstr_to_array(str)
-      result = Array.new()
-      hoge = Array.new()
-      str.split("ENTER").each do |item|
-        item.gsub!(/\[|\s/, "")
-        hoge.push(item.split("]"))
-      end
-
-      hoge.each do |items|
-        temp = Array.new()
-        hoge = Array.new()
-        items.each do |item|
-          temp.push(item.split(",").map(&:to_i))
-        end
-        result.push(temp)
-      end
-
-      result
-    end
-
-    def gen_str_function()
-      str = 
-      "
       
       def print_array(array)
         array.each do |two_dimension|
@@ -99,16 +56,8 @@ class PlayController < ApplicationController
         end
       end
 
-      size = 25
+      size = 40
       step = 25
       result = calc_automaton(board_init(size), step, size)
       print_array(result)
-      "
-
-      str
-    end
-
-
-
-
-end
+      

@@ -1,0 +1,27 @@
+= form_for @cell_automaton do |f|
+  - if @cell_automaton.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@cell_automaton.errors.count, "error")} prohibited this cell_automaton from being saved:"
+      ul
+        - @cell_automaton.errors.full_messages.each do |message|
+          li = message
+
+  .field
+    = f.label :name
+    = f.text_field :name
+  .field
+    = f.label :board_size
+    = f.number_field :board_size
+  .field
+    = f.label :step
+    = f.number_field :step
+  .field
+    = f.label :state_num
+    = f.number_field :state_num
+  .field
+    = f.label :init_type
+    = f.number_field :init_type
+  .field
+    = f.label :neighbor_rule
+    = f.text_area :neighbor_rule
+  .actions = f.submit

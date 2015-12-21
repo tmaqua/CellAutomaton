@@ -1,0 +1,26 @@
+p#notice = notice
+
+= link_to 'Show CellAutomaton', show_cell_path(@cell_automaton)
+
+p
+  strong Name:
+  = @cell_automaton.name
+p
+  strong Board size:
+  = @cell_automaton.board_size
+p
+  strong Step:
+  = @cell_automaton.step
+p
+  strong State num:
+  = @cell_automaton.state_num
+p
+  strong Init type:
+  = @cell_automaton.init_type
+p
+  strong Neighbor rule:
+  = @cell_automaton.neighbor_rule
+
+= link_to 'Edit', edit_cell_automaton_path(@cell_automaton)
+'|
+= link_to 'Back', cell_automatons_path
