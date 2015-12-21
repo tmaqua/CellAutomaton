@@ -10,7 +10,9 @@
       end
       
       def board_init(size)
-        init_array = Array.new(size){ Array.new(size){ rand(0..1) } }
+        #init_array = Array.new(size){ Array.new(size){ rand(0..1) } }
+        max_value = 2 - 1
+        init_array = Array.new(size){ Array.new(size){ rand(0..max_value) } }
       end
 
       def calc_automaton(init_array, step, size)

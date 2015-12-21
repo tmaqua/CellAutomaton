@@ -17,6 +17,9 @@ class CellAutomatonsController < ApplicationController
     gon.rowNum = @cell_automaton.board_size
     gon.columnNum = @cell_automaton.board_size
     gon.step = @cell_automaton.step+1
+    gon.stateNum = @cell_automaton.state_num
+    gon.colors = ['white', 'gray']
+    # gon.colors = @cell_automaton.colors
   end
 
   # GET /cell_automatons/new
@@ -119,7 +122,9 @@ class CellAutomatonsController < ApplicationController
       end
       
       def board_init(size)
-        init_array = Array.new(size){ Array.new(size){ rand(0..1) } }
+        #init_array = Array.new(size){ Array.new(size){ rand(0..1) } }
+        max_value = #{@cell_automaton.state_num} - 1
+        init_array = Array.new(size){ Array.new(size){ rand(0..max_value) } }
       end
 
       def calc_automaton(init_array, step, size)

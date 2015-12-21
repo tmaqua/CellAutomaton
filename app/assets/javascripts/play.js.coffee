@@ -4,14 +4,18 @@ step = 0
 array = null
 playingStep = 0
 wait = 0
+stateNum = 3
+colors = ['white', 'gray', 'red']
 
 $('.cell_automatons.show_cell').ready -> 
   rowNum = gon.rowNum
   columnNum = gon.columnNum
   step = gon.step
   array = gon.array
+  stateNum = gon.stateNum
   playingStep = 0
   wait = 0
+  colors = gon.colors
   createCellTable(rowNum,columnNum)
   $('#playButton').click ->
     playAutomatonAll(step, playingStep)
@@ -53,12 +57,20 @@ playAutomaton = (arrayIndex) ->
   for i in [0..rowNum-1]
     row = tr.eq(i).children()
     for j in [0..columnNum-1]
-      if tempArray[i][j] == 0
-        td = row.eq(j).text();
-        row.eq(j).css('background-color', 'white')
-      else
-        td = row.eq(j).text()
-        row.eq(j).css('background-color', 'gray')
+      td = row.eq(j).text();
+      for k in [0..stateNum-1]
+        if k == tempArray[i][j]
+          row.eq(j).css('background-color', colors[k])
+        
+      # if tempArray[i][j] == 0
+      #   td = row.eq(j).text();
+      #   row.eq(j).css('background-color', 'white')
+      # else if tempArray[i][j] == 1
+      #   td = row.eq(j).text()
+      #   row.eq(j).css('background-color', 'gray')
+      # else
+      #   td = row.eq(j).text();
+      #   row.eq(j).css('background-color', 'red')
 
 playAutomatonAll = (step, playingStep) ->
   button = $('#playButton')
