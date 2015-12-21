@@ -76,7 +76,7 @@ class CellAutomatonsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def cell_automaton_params
-      params.require(:cell_automaton).permit(:name, :board_size, :step, :state_num, :init_type, :neighbor_rule)
+      params.require(:cell_automaton).permit(:name, :board_size, :step, :state_num, :init_type, :neighbor_rule, :colors)
     end
 
     def execute_ruby_file(file_name)
