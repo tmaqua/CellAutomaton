@@ -1,9 +1,9 @@
-# rowNum = gon.rowNum
-# columnNum = gon.columnNum
-# step = gon.step
-# array = gon.array
-# playingStep = 0
-# wait = 0
+rowNum = 0
+columnNum = 0
+step = 0
+array = null
+playingStep = 0
+wait = 0
 
 $('.cell_automatons.show_cell').ready -> 
   rowNum = gon.rowNum
