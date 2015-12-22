@@ -18,7 +18,7 @@ class CellAutomatonsController < ApplicationController
     gon.columnNum = @cell_automaton.board_size
     gon.step = @cell_automaton.step+1
     gon.stateNum = @cell_automaton.state_num
-    gon.colors = ['white', 'gray']
+    gon.colors = ['white', 'gray', '#7bd148', '#5484ed', '#a4bdfc', '#7ae7bf']
     # gon.colors = @cell_automaton.colors
   end
 

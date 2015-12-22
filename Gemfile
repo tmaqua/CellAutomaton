@@ -18,6 +18,7 @@ gem 'unicorn'
 gem 'slim-rails'
 gem 'bootstrap-sass'
 gem 'font-awesome-sass'
+gem 'bootstrap_form'
 
 gem 'gon'
 gem 'jquery-turbolinks'

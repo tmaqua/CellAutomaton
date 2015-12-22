@@ -49,13 +49,13 @@
       end
 
       def judge_next_state(state_count, now_state)
-        if now_state == 0 && (state_count >= 3 && state_count <= 3) # 誕生
-          1
-        elsif now_state == 1 && (state_count >= 2 && state_count <= 3) # 維持
-          1
-        else # 死
-          0
-        end
+        if now_state == 0 && (state_count >= 3 && state_count <= 3)
+  1
+elsif now_state == 1 && (state_count >= 2 && state_count <= 3)
+  1
+else
+  0
+end
       end
 
       size = 40

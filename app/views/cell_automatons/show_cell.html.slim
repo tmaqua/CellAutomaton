@@ -1,11 +1,30 @@
-h1 PlayCellAutomaton
+h1 セルオートマトン プレイヤー
 
-table#cells
-button#playButton Play
-button#pauseButton Pause
-button#stopButton Stop
-button#nextButton Next
-button#backButton Back
+.row
+  .col-md-8.col-md-offset-2
+    .row
+      .col-md-8.col-md-offset-2
+        table#cells
+
+        .row
+          .col-md-8.col-md-offset-2
+            .btn-group
+              button#backButton.btn.btn-default
+                i.fa.fa-step-backward.fa-2x
+
+              button#playButton.btn.btn-default
+                i.fa.fa-play.fa-2x
+              
+              button#pauseButton.btn.btn-default
+                i.fa.fa-pause.fa-2x
+              
+              button#stopButton.btn.btn-default
+                i.fa.fa-stop.fa-2x
+              
+              button#nextButton.btn.btn-default
+                i.fa.fa-step-forward.fa-2x
+        
+        
 
 br
 br
