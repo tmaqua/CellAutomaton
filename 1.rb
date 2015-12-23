@@ -11,7 +11,7 @@
       
       def board_init(size)
         #init_array = Array.new(size){ Array.new(size){ rand(0..1) } }
-        max_value = 2 - 1
+        max_value = 3 - 1
         init_array = Array.new(size){ Array.new(size){ rand(0..max_value) } }
       end
 
@@ -52,7 +52,7 @@
         if now_state == 0 && (state_count >= 3 && state_count <= 3)
   1
 elsif now_state == 1 && (state_count >= 2 && state_count <= 3)
-  1
+  2
 else
   0
 end
