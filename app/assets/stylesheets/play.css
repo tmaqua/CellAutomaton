@@ -1,9 +1,14 @@
 table {
   border-collapse: collapse;
+  table-layout: fixed;
 }
 
 td {
   border: solid 1px;
   width: 10px;
   height: 10px;
+}
+
+p.boxtext {
+  margin: 0;
 }

@@ -17,7 +17,8 @@
           .row
             .col-md-9.col-sm-8
               .pad
-                p = cell_automaton.neighbor_rule
+                - cell_automaton.neighbor_rule.split("\r\n").each do |text|
+                  p.boxtext = text
             .col-md-3.col-sm-4
               .pad.box-pane-right.bg-green
                 .description-block.margin-bottom
@@ -26,6 +27,6 @@
                 .description-block.margin-bottom
                   h5.description-header = cell_automaton.step
                   span.description-text Step Num
-                .description-block
+                .description-block.margin-bottom
                   h5.description-header = cell_automaton.state_num
                   span.description-text State Num

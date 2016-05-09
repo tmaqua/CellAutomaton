@@ -1,15 +1,30 @@
-p#notice = notice
+- if notice
+  .alert.alert-info.alert-dismissable
+    button.close aria-hidden="true" data-dismiss="alert" type="button"  &times;
+    h4
+      i.icon.fa.fa-info
+      = notice
+
 
 h1 セルオートマトン プレイヤー
-
 .row
-  .col-md-8.col-md-offset-2
-    .row
-      .col-md-8.col-md-offset-2
-        table#cells
-
+  .col-md-12
+    .box.box-primary
+      .box-header
+        .box-tools.pull-right
+          = link_to edit_cell_automaton_path(@cell_automaton), class: "btn btn-box-tool" do
+            編集する
+            i.fa.fa-pencil
+          = link_to cell_automatons_path, class: "btn btn-box-tool" do
+            一覧に戻る
+            i.fa.fa-reply
+      .box-body.no-padding
         .row
           .col-md-8.col-md-offset-2
+            table#cells
+      .box-footer
+        .row
+          .col-md-8.col-md-offset-2.text-center
             .btn-group
               button#backButton.btn.btn-default
                 i.fa.fa-step-backward.fa-2x
@@ -26,11 +41,3 @@ h1 セルオートマトン プレイヤー
               button#nextButton.btn.btn-default
                 i.fa.fa-step-forward.fa-2x
         
-        
-
-br
-br
-
-= link_to 'Edit', edit_cell_automaton_path(@cell_automaton)
-'|
-= link_to 'Back', cell_automatons_path
