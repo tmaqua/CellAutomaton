@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151221171930) do
+ActiveRecord::Schema.define(version: 20160507042506) do
 
   create_table "cell_automatons", force: :cascade do |t|
     t.string   "name"
@@ -22,21 +22,13 @@ ActiveRecord::Schema.define(version: 20151221171930) do
     t.text     "neighbor_rule"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
-    t.text     "colors"
   end
 
-  create_table "lifegames", force: :cascade do |t|
-    t.integer  "board_size"
-    t.integer  "step"
-    t.integer  "state_num"
-    t.integer  "init_type"
-    t.integer  "state_count_range"
-    t.integer  "live_count_min"
-    t.integer  "live_count_max"
-    t.integer  "retention_count_min"
-    t.integer  "retention_count_max"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
+  create_table "cells", force: :cascade do |t|
+    t.string   "color"
+    t.integer  "cell_automaton_id"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
   end
 
 end

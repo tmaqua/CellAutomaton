@@ -22,6 +22,7 @@ gem 'bootstrap_form'
 
 gem 'gon'
 gem 'jquery-turbolinks'
+gem 'bower-rails'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

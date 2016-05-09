@@ -1,7 +1,7 @@
 require "open3"
 
 class CellAutomatonsController < ApplicationController
-  before_action :set_cell_automaton, only: [:show, :show_cell, :edit, :update, :destroy]
+  before_action :set_cell_automaton, only: [:show, :edit, :update, :destroy]
 
   # GET /cell_automatons
   def index
@@ -10,21 +10,18 @@ class CellAutomatonsController < ApplicationController
 
   # GET /cell_automatons/1
   def show
-  end
-
-  def show_cell
     gon.array = execute_ruby_file(@cell_automaton.id)
     gon.rowNum = @cell_automaton.board_size
     gon.columnNum = @cell_automaton.board_size
     gon.step = @cell_automaton.step+1
     gon.stateNum = @cell_automaton.state_num
-    gon.colors = ['white', 'gray', '#7bd148', '#5484ed', '#a4bdfc', '#7ae7bf']
-    # gon.colors = @cell_automaton.colors
+    gon.colors = @cell_automaton.cells.pluck(:color)
   end
 
   # GET /cell_automatons/new
   def new
     @cell_automaton = CellAutomaton.new
+    2.times{ @cell_automaton.cells.build }
   end
 
   # GET /cell_automatons/1/edit
@@ -79,7 +76,12 @@ class CellAutomatonsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def cell_automaton_params
-      params.require(:cell_automaton).permit(:name, :board_size, :step, :state_num, :init_type, :neighbor_rule, :colors)
+      params.require(:cell_automaton).permit(
+        :name, :board_size, :step, :state_num, :init_type, :neighbor_rule,
+        cells_attributes: [
+          :id, :cell_automaton_id, :color, :_destroy
+        ]
+      )
     end
 
     def execute_ruby_file(file_name)

@@ -7,7 +7,8 @@ wait = 0
 stateNum = 3
 colors = ['white', 'gray', 'red']
 
-$('.cell_automatons.show_cell').ready -> 
+
+$('.cell_automatons.show').ready -> 
   rowNum = gon.rowNum
   columnNum = gon.columnNum
   step = gon.step
@@ -36,7 +37,6 @@ $('.cell_automatons.show_cell').ready ->
     clearInterval(wait)
     $('#playButton').attr("disabled", false)
     playAutomaton(playingStep)
-
 
 
 createCellTable = (rowNum, columnNum) ->

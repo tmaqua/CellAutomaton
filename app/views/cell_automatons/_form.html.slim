@@ -1,54 +1,42 @@
 .row
   .col-md-8.col-md-offset-2
-    .panel.panel-default
-      .panel-body
-        = form_for @cell_automaton, :html => {:class => "form-horizontal center"}  do |f|
-          - if @cell_automaton.errors.any?
-            #error_explanation
-              h2 = "#{pluralize(@cell_automaton.errors.count, "error")} prohibited this cell_automaton from being saved:"
-              ul
-                - @cell_automaton.errors.full_messages.each do |message|
-                  li = message
+    .box.box-primary
+      .box-header.with-border
+        h3.box-title CellAutomaton Form
+      = form_for @cell_automaton, :html => {:class => "form-horizontal center"}  do |f|
+        - if @cell_automaton.errors.any?
+          #error_explanation
+            h2 = "#{pluralize(@cell_automaton.errors.count, "error")} prohibited this cell_automaton from being saved:"
+            ul
+              - @cell_automaton.errors.full_messages.each do |message|
+                li = message
+        .box-body
           .form-group
-            / .field
-            = f.label "名前", class: 'control-label col-md-4'
-            .col-md-8
-              = f.text_field :name, class: 'form-control'
-          
+            = f.label "Name", class: 'control-label col-sm-2'
+            .col-sm-10
+              = f.text_field :name, class: 'form-control', :placeholder => "CellAutomaton Name"
           .form-group
-            = f.label "フィールドサイズ", class: 'control-label col-md-4'
-            .col-md-8
-              = f.number_field :board_size, class: 'form-control'
-
+            = f.label "Field num", class: 'control-label col-sm-2'
+            .col-sm-10
+              = f.number_field :board_size, class: 'form-control', :placeholder => "50"
           .form-group
-            = f.label "ステップ数", class: 'control-label col-md-4'
-            .col-md-8
-              = f.number_field :step, class: 'form-control'
-
+            = f.label "Step num", class: 'control-label col-sm-2'
+            .col-sm-10
+              = f.number_field :step, class: 'form-control', :placeholder => "100"
           .form-group
-            = f.label "状態数", class: 'control-label col-md-4'
-            .col-md-8
-              = f.number_field :state_num, class: 'form-control'
-
-          / .form-group
-          /   = f.label "初期化のタイプ", class: 'control-label col-md-4'
-          /   .col-md-8
-          /     = f.number_field :init_type, class: 'form-control'
-
+            = f.label "State num", class: 'control-label col-sm-2'
+            .col-sm-10
+              = f.number_field :state_num, class: 'form-control', :placeholder => "2"
           .form-group
-            = f.label "近傍則", class: 'control-label col-md-4'
-            .col-md-8
-              = f.text_area :neighbor_rule , class: 'form-control', rows: '12'
-
+            = f.label "Neighbor rule", class: 'control-label col-sm-2'
+            .col-sm-10
+              = f.text_area :neighbor_rule, class: 'form-control', rows: '12'
           .form-group
-            .col-md-4.col-md-offset-8
-              .actions = f.submit "完了", class: 'btn btn-primary btn-lg pull-right'
-
-
-
-
-
-
-
-
-
+            = f.label "State color", class: 'control-label col-sm-2'
+            .col-sm-10
+              = f.fields_for :cells do |cell|
+                = render "cell_fields", f: cell
+              = link_to_add_fields "色追加", f, :cells
+        .box-footer
+          .actions = f.submit "Complete", class: 'btn btn-info pull-right'
+          = link_to "Cancel", cell_automatons_path, class: "btn btn-default"

@@ -5,4 +5,11 @@
 
 @import "rails_bootstrap_forms";
 
+@import "admin-lte/dist/css/AdminLTE";
+@import "admin-lte/dist/css/skins/skin-blue";
+
 @import "play";
+
+body {
+  background-color: #F3ECEC;
+}

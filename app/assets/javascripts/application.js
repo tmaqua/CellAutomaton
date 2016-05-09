@@ -14,5 +14,6 @@
 //= require jquery_ujs
 //= require jquery.turbolinks
 //= require bootstrap-sprockets
+//= require admin-lte/dist/js/app.js
 
 //= require_tree .

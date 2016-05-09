@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
   
   resources :cell_automatons
-  get 'cell_automatons/show_cell/:id' => 'cell_automatons#show_cell', as: :show_cell
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

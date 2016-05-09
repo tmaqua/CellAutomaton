@@ -1,29 +1,5 @@
-h1 一覧
-
-table
-  thead
-    tr
-      th 名前
-      th フィールドサイズ
-      th ステップ数
-      th 状態数
-      / th Neighbor rule
-      th
-      th
-      th
-
-  tbody
-    - @cell_automatons.each do |cell_automaton|
-      tr
-        td = cell_automaton.name
-        td = cell_automaton.board_size
-        td = cell_automaton.step
-        td = cell_automaton.state_num
-        / td = cell_automaton.neighbor_rule
-        td = link_to '試す', show_cell_path(cell_automaton)
-        td = link_to '編集', edit_cell_automaton_path(cell_automaton)
-        td = link_to '削除', cell_automaton, data: {:confirm => 'Are you sure?'}, :method => :delete
-
+h1 セルオートマトン 一覧
 br
+= render 'cell_index', cell_automatons: @cell_automatons
 
-= link_to '新規作成', new_cell_automaton_path
+= link_to "New Create", new_cell_automaton_path, class: "btn btn-primary pull-right"
