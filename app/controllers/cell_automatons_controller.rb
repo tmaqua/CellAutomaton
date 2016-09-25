@@ -1,11 +1,16 @@
 require "open3"
 
 class CellAutomatonsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_cell_automaton, only: [:show, :edit, :update, :destroy]
 
   # GET /cell_automatons
   def index
-    @cell_automatons = CellAutomaton.all
+    if user_signed_in?
+      @cell_automatons = current_user.cell_automatons
+    else
+      @cell_automatons = CellAutomaton.all
+    end
   end
 
   # GET /cell_automatons/1
@@ -32,6 +37,7 @@ class CellAutomatonsController < ApplicationController
   # POST /cell_automatons.json
   def create
     @cell_automaton = CellAutomaton.new(cell_automaton_params)
+    @cell_automaton.user_id = user_signed_in? ? current_user.id : 0
 
     respond_to do |format|
       if @cell_automaton.save

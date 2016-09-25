@@ -1,4 +1,5 @@
 class CellAutomaton < ActiveRecord::Base
+  belongs_to :user
   has_many :cells, -> { order(:id) }, :dependent => :destroy
   accepts_nested_attributes_for :cells, allow_destroy: true
 
