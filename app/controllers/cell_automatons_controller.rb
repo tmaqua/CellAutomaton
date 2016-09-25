@@ -19,8 +19,8 @@ class CellAutomatonsController < ApplicationController
     file_name = file_path.to_s + "/" + @cell_automaton.id.to_s
 
     gon.array = execute_ruby_file(file_name)
-    gon.rowNum = @cell_automaton.board_size
-    gon.columnNum = @cell_automaton.board_size
+    gon.rowNum = @cell_automaton.height
+    gon.columnNum = @cell_automaton.width
     gon.step = @cell_automaton.step+1
     gon.stateNum = @cell_automaton.state_num
     gon.colors = @cell_automaton.cells.pluck(:color)
@@ -79,7 +79,7 @@ class CellAutomatonsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def cell_automaton_params
       params.require(:cell_automaton).permit(
-        :name, :board_size, :step, :state_num, :init_type, :neighbor_rule, :init_rule,
+        :name, :board_size, :step, :state_num, :init_type, :neighbor_rule, :init_rule, :width, :height,
         cells_attributes: [
           :id, :cell_automaton_id, :color, :_destroy
         ]
@@ -126,8 +126,8 @@ class CellAutomatonsController < ApplicationController
 
     def generate_function_board_init
       "
-      def board_init(size)
-        init_array = Array.new(size){ Array.new(size){-1} }
+      def board_init(width, height)
+        init_array = Array.new(width){ Array.new(height){-1} }
         #{@cell_automaton.init_rule}
         init_array
       end
@@ -136,14 +136,14 @@ class CellAutomatonsController < ApplicationController
 
     def generate_function_calc_automaton
       "
-      def calc_automaton(init_array, step, size)
+      def calc_automaton(init_array, step, width, height)
         result = [init_array]
         step.times do |n|
           old_array = result[n]
-          new_array = Array.new(size){Array.new(size)}
+          new_array = Array.new(width){Array.new(height)}
           old_array.each_with_index do |old_array_row, y|
             old_array_row.each_with_index do |now_state, x|
-              new_array[y][x] = judge_next_state(count_true_state(old_array, y, x), now_state, old_array, x, y, size)
+              new_array[y][x] = judge_next_state(count_true_state(old_array, y, x), now_state, old_array, x, y, width, height)
             end
           end
           result.push(new_array)
@@ -155,7 +155,7 @@ class CellAutomatonsController < ApplicationController
 
     def generate_function_judge_next_state
       "
-      def judge_next_state(state_count, now_state, now_array, x, y, size)
+      def judge_next_state(state_count, now_state, now_array, x, y, width, height)
         #{@cell_automaton.neighbor_rule}
       end
       "
@@ -192,9 +192,10 @@ class CellAutomatonsController < ApplicationController
       #{generate_function_judge_next_state()}
       #{generate_function_count_state()}
       
-      size = #{@cell_automaton.board_size}
+      width = #{@cell_automaton.width}
+      height = #{@cell_automaton.height}
       step = #{@cell_automaton.step}
-      result = calc_automaton(board_init(size), step, size)
+      result = calc_automaton(board_init(width, height), step, width, height)
       print_array(result)
       "
 

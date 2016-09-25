@@ -61,16 +61,6 @@ playAutomaton = (arrayIndex) ->
       for k in [0..stateNum-1]
         if k == tempArray[i][j]
           row.eq(j).css('background-color', colors[k])
-        
-      # if tempArray[i][j] == 0
-      #   td = row.eq(j).text();
-      #   row.eq(j).css('background-color', 'white')
-      # else if tempArray[i][j] == 1
-      #   td = row.eq(j).text()
-      #   row.eq(j).css('background-color', 'gray')
-      # else
-      #   td = row.eq(j).text();
-      #   row.eq(j).css('background-color', 'red')
 
 playAutomatonAll = (step, playingStep) ->
   button = $('#playButton')
