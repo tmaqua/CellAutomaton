@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160925165309) do
+ActiveRecord::Schema.define(version: 20160925182240) do
 
   create_table "cell_automatons", force: :cascade do |t|
     t.string   "name"
@@ -24,6 +24,8 @@ ActiveRecord::Schema.define(version: 20160925165309) do
     t.datetime "updated_at",                 null: false
     t.integer  "user_id",       default: 0,  null: false
     t.text     "init_rule",     default: "", null: false
+    t.integer  "width",         default: 1,  null: false
+    t.integer  "height",        default: 1,  null: false
   end
 
   create_table "cells", force: :cascade do |t|

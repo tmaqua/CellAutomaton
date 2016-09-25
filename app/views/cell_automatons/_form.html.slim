@@ -16,9 +16,13 @@
             .col-sm-10
               = f.text_field :name, class: 'form-control', :placeholder => "CellAutomaton Name"
           .form-group
-            = f.label "フィールドサイズ", class: 'control-label col-sm-2'
+            = f.label "縦の長さ", class: 'control-label col-sm-2'
             .col-sm-10
-              = f.number_field :board_size, class: 'form-control', :placeholder => "50"
+              = f.number_field :height, class: 'form-control', :placeholder => "50"
+          .form-group
+            = f.label "横の長さ", class: 'control-label col-sm-2'
+            .col-sm-10
+              = f.number_field :width, class: 'form-control', :placeholder => "50"
           .form-group
             = f.label "ステップ数", class: 'control-label col-sm-2'
             .col-sm-10
