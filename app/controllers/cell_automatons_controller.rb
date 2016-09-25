@@ -79,7 +79,7 @@ class CellAutomatonsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def cell_automaton_params
       params.require(:cell_automaton).permit(
-        :name, :board_size, :step, :state_num, :init_type, :neighbor_rule,
+        :name, :board_size, :step, :state_num, :init_type, :neighbor_rule, :init_rule,
         cells_attributes: [
           :id, :cell_automaton_id, :color, :_destroy
         ]
@@ -127,19 +127,8 @@ class CellAutomatonsController < ApplicationController
     def generate_function_board_init
       "
       def board_init(size)
-        # max_value = #{@cell_automaton.state_num} - 1
-        # init_array = Array.new(size){ Array.new(size){ rand(0..max_value) } }
-        init_array = Array.new(size)
-        herf = (size - 2)/2
-        size.times do |i|
-          if i >= 0 && i < herf
-            init_array[i] = (Array.new(size){ 2 })
-          elsif i >= size - herf && i < size
-            init_array[i] = (Array.new(size){ 2 })
-          else
-            init_array[i] = (Array.new(size){ rand(0..1) })
-          end
-        end
+        init_array = Array.new(size){ Array.new(size){-1} }
+        #{@cell_automaton.init_rule}
         init_array
       end
       "
