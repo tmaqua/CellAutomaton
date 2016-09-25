@@ -12,27 +12,31 @@
                 li = message
         .box-body
           .form-group
-            = f.label "Name", class: 'control-label col-sm-2'
+            = f.label "名前", class: 'control-label col-sm-2'
             .col-sm-10
               = f.text_field :name, class: 'form-control', :placeholder => "CellAutomaton Name"
           .form-group
-            = f.label "Field num", class: 'control-label col-sm-2'
+            = f.label "フィールドサイズ", class: 'control-label col-sm-2'
             .col-sm-10
               = f.number_field :board_size, class: 'form-control', :placeholder => "50"
           .form-group
-            = f.label "Step num", class: 'control-label col-sm-2'
+            = f.label "ステップ数", class: 'control-label col-sm-2'
             .col-sm-10
               = f.number_field :step, class: 'form-control', :placeholder => "100"
           .form-group
-            = f.label "State num", class: 'control-label col-sm-2'
+            = f.label "状態数", class: 'control-label col-sm-2'
             .col-sm-10
               = f.number_field :state_num, class: 'form-control', :placeholder => "2"
           .form-group
-            = f.label "Neighbor rule", class: 'control-label col-sm-2'
+            = f.label "初期化ルール", class: 'control-label col-sm-2'
+            .col-sm-10
+              = f.text_area :init_rule, class: 'form-control', rows: '12'
+          .form-group
+            = f.label "近傍則", class: 'control-label col-sm-2'
             .col-sm-10
               = f.text_area :neighbor_rule, class: 'form-control', rows: '12'
           .form-group
-            = f.label "State color", class: 'control-label col-sm-2'
+            = f.label "状態の色", class: 'control-label col-sm-2'
             .col-sm-10
               = f.fields_for :cells do |cell|
                 = render "cell_fields", f: cell
