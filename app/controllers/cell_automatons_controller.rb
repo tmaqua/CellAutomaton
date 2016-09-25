@@ -15,7 +15,10 @@ class CellAutomatonsController < ApplicationController
 
   # GET /cell_automatons/1
   def show
-    gon.array = execute_ruby_file(@cell_automaton.id)
+    file_path = Rails.root.join("public", "cell_automatons", "#{current_user.id}")
+    file_name = file_path.to_s + "/" + @cell_automaton.id.to_s
+
+    gon.array = execute_ruby_file(file_name)
     gon.rowNum = @cell_automaton.board_size
     gon.columnNum = @cell_automaton.board_size
     gon.step = @cell_automaton.step+1
@@ -39,28 +42,20 @@ class CellAutomatonsController < ApplicationController
     @cell_automaton = CellAutomaton.new(cell_automaton_params)
     @cell_automaton.user_id = user_signed_in? ? current_user.id : 0
 
-    respond_to do |format|
-      if @cell_automaton.save
-        format.html { redirect_to @cell_automaton, notice: 'Cell automaton was successfully created.' }
-        format.json { render :show, status: :created, location: @cell_automaton }
-      else
-        format.html { render :new }
-        format.json { render json: @cell_automaton.errors, status: :unprocessable_entity }
-      end
+    if @cell_automaton.save
+      redirect_to @cell_automaton, notice: 'Cell automaton was successfully created.'
+    else
+      render :new
     end
   end
 
   # PATCH/PUT /cell_automatons/1
   # PATCH/PUT /cell_automatons/1.json
   def update
-    respond_to do |format|
-      if @cell_automaton.update(cell_automaton_params)
-        format.html { redirect_to @cell_automaton, notice: 'Cell automaton was successfully updated.' }
-        format.json { render :show, status: :ok, location: @cell_automaton }
-      else
-        format.html { render :edit }
-        format.json { render json: @cell_automaton.errors, status: :unprocessable_entity }
-      end
+    if @cell_automaton.update(cell_automaton_params)
+      redirect_to @cell_automaton, notice: 'Cell automaton was successfully updated.'
+    else
+      render :edit
     end
   end
 
@@ -68,10 +63,11 @@ class CellAutomatonsController < ApplicationController
   # DELETE /cell_automatons/1.json
   def destroy
     @cell_automaton.destroy
-    respond_to do |format|
-      format.html { redirect_to cell_automatons_url, notice: 'Cell automaton was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    file_path = Rails.root.join("public", "cell_automatons", "#{current_user.id}")
+    file_name = file_path.to_s + "/" + @cell_automaton.id.to_s
+    File.delete("#{file_name}.rb")
+    
+    redirect_to cell_automatons_url, notice: 'Cell automaton was successfully destroyed.'
   end
 
   private
@@ -112,7 +108,6 @@ class CellAutomatonsController < ApplicationController
         end
         result.push(temp)
       end
-
       result
     end
 
