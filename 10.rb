@@ -11,7 +11,7 @@
       
       
       def board_init(size)
-        # max_value = 5 - 1
+        # max_value = 3 - 1
         # init_array = Array.new(size){ Array.new(size){ rand(0..max_value) } }
         init_array = Array.new(size)
         herf = (size - 2)/2
@@ -45,17 +45,44 @@
       
       
       def judge_next_state(state_count, now_state, now_array, x, y, size)
-        if (now_state == 0 && (state_count >= 5 && state_count <= 5))
-    1
-   elsif (now_state == 1 && (state_count >= 4 && state_count <= 5))
+        # 0: 車両
+# 1: 道路
+# 2: 進入不可
+# judge_next_state(state_count, now_state, now_array, x, y)
+  herf = (size - 2)/2
+  if y == herf || y == herf+1
+    if x == 0 # car in
+      flag = Random.rand <= 0.8 ? true : false
+      if flag && now_state == 1
+        0
+      else
+        1
+      end
+    elsif x == size # car out
+      if (now_array[y][x-1] == 0)
+        0
+      else
+        1
+      end
+    else # car run
+      if (now_state == 0)
+        if (now_array[y][x+1] == 0)
+          0
+        else
+          1
+        end
+      else
+        if (now_array[y][x-1] == 0)
+          0
+        else
+          1
+        end
+      end
+    end
+  else
     2
-   elsif (now_state == 2 && (state_count >= 3 && state_count <= 5))
-   3
-   elsif (now_state == 3 && (state_count >= 2 && state_count <= 5))
-   4
-   else
-    0
   end
+# end
       end
       
       
@@ -79,7 +106,7 @@
       
       
       size = 50
-      step = 20
+      step = 150
       result = calc_automaton(board_init(size), step, size)
       print_array(result)
       

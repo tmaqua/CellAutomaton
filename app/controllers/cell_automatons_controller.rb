@@ -110,10 +110,8 @@ class CellAutomatonsController < ApplicationController
       result
     end
 
-    def gen_str_function()
-      str = 
+    def generate_function_print_array
       "
-      
       def print_array(array)
         array.each do |two_dimension|
           two_dimension.each do |one_dimension|
@@ -122,13 +120,32 @@ class CellAutomatonsController < ApplicationController
           print 'ENTER'
         end
       end
-      
-      def board_init(size)
-        #init_array = Array.new(size){ Array.new(size){ rand(0..1) } }
-        max_value = #{@cell_automaton.state_num} - 1
-        init_array = Array.new(size){ Array.new(size){ rand(0..max_value) } }
-      end
+      "
+    end
 
+    def generate_function_board_init
+      "
+      def board_init(size)
+        # max_value = #{@cell_automaton.state_num} - 1
+        # init_array = Array.new(size){ Array.new(size){ rand(0..max_value) } }
+        init_array = Array.new(size)
+        herf = (size - 2)/2
+        size.times do |i|
+          if i >= 0 && i < herf
+            init_array[i] = (Array.new(size){ 2 })
+          elsif i >= size - herf && i < size
+            init_array[i] = (Array.new(size){ 2 })
+          else
+            init_array[i] = (Array.new(size){ rand(0..1) })
+          end
+        end
+        init_array
+      end
+      "
+    end
+
+    def generate_function_calc_automaton
+      "
       def calc_automaton(init_array, step, size)
         result = [init_array]
         step.times do |n|
@@ -136,14 +153,26 @@ class CellAutomatonsController < ApplicationController
           new_array = Array.new(size){Array.new(size)}
           old_array.each_with_index do |old_array_row, y|
             old_array_row.each_with_index do |now_state, x|
-              new_array[y][x] = judge_next_state(count_true_state(old_array, y, x), now_state)
+              new_array[y][x] = judge_next_state(count_true_state(old_array, y, x), now_state, old_array, x, y, size)
             end
           end
           result.push(new_array)
         end
         result
       end
+      "
+    end
 
+    def generate_function_judge_next_state
+      "
+      def judge_next_state(state_count, now_state, now_array, x, y, size)
+        #{@cell_automaton.neighbor_rule}
+      end
+      "
+    end
+
+    def generate_function_count_state
+      "
       def count_true_state(array, y, x)
         counter = 0
 
@@ -161,11 +190,18 @@ class CellAutomatonsController < ApplicationController
         
         counter
       end
+      "
+    end
 
-      def judge_next_state(state_count, now_state)
-        #{@cell_automaton.neighbor_rule}
-      end
-
+    def gen_str_function()
+      str = 
+      "
+      #{generate_function_print_array()}
+      #{generate_function_board_init()}
+      #{generate_function_calc_automaton()}
+      #{generate_function_judge_next_state()}
+      #{generate_function_count_state()}
+      
       size = #{@cell_automaton.board_size}
       step = #{@cell_automaton.step}
       result = calc_automaton(board_init(size), step, size)
