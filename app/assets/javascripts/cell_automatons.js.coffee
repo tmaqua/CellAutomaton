@@ -13,7 +13,7 @@ $ ->
   $('form').on 'submit', (event) ->
     cellFields = $('form').find(".cell-field:visible")
     stateNum = $('#cell_automaton_state_num').val()
-    
-    if cellFields.length != +stateNum
+
+    if cellFields.length && cellFields.length != +stateNum
       event.preventDefault()
       alert("状態数と色の数が一致していません")
