@@ -25,6 +25,7 @@ gem 'jquery-turbolinks'
 gem 'bower-rails'
 
 gem 'devise'
+gem 'config'
 
 group :development, :test do
   gem 'byebug'

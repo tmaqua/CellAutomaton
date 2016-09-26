@@ -12,3 +12,10 @@ td {
 p.boxtext {
   margin: 0;
 }
+
+.tooltip-inner {
+  background-color: #73AD21; 
+  font-size: 14px;
+  text-align: left;
+  max-width: 350px;
+}
