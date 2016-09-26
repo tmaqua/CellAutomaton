@@ -11,35 +11,43 @@
               - @cell_automaton.errors.full_messages.each do |message|
                 li = message
         .box-body
+          
           .form-group
             = f.label "名前", class: 'control-label col-sm-2'
             .col-sm-10
               = f.text_field :name, class: 'form-control', :placeholder => "CellAutomaton Name"
+          
           .form-group
             = f.label "縦の長さ", class: 'control-label col-sm-2'
-            .col-sm-10
+            .col-sm-10.help data-toggle="tooltip" title="#{Settings.HelpHeight}" data-html="true"
               = f.number_field :height, class: 'form-control', :placeholder => "50"
+          
           .form-group
             = f.label "横の長さ", class: 'control-label col-sm-2'
-            .col-sm-10
+            .col-sm-10.help data-toggle="tooltip" title="#{Settings.HelpWidth}" data-html="true"
               = f.number_field :width, class: 'form-control', :placeholder => "50"
+          
           .form-group
             = f.label "ステップ数", class: 'control-label col-sm-2'
-            .col-sm-10
+            .col-sm-10.help data-toggle="tooltip" title="#{Settings.HelpStep}" data-html="true"
               = f.number_field :step, class: 'form-control', :placeholder => "100"
+          
           .form-group
             = f.label "状態数", class: 'control-label col-sm-2'
-            .col-sm-10
+            .col-sm-10.help data-toggle="tooltip" title="#{Settings.HelpStateNum}" data-html="true"
               = f.number_field :state_num, class: 'form-control', :placeholder => "2"
+          
           .form-group
             = f.label "初期化ルール", class: 'control-label col-sm-2'
-            .col-sm-10
+            .col-sm-10.help data-toggle="tooltip" title="#{Settings.HelpInitRule}" data-html="true"
               = f.text_area :init_rule, class: 'form-control', rows: '12'
+          
           .form-group
             = f.label "近傍則", class: 'control-label col-sm-2'
-            .col-sm-10
+            .col-sm-10.help data-toggle="tooltip" title="#{Settings.HelpNeighborRule}" data-html="true"
               = f.text_area :neighbor_rule, class: 'form-control', rows: '12'
-          .form-group
+          
+          .form-group.help data-toggle="tooltip" title="#{Settings.HelpColor}" data-html="true"
             = f.label "状態の色", class: 'control-label col-sm-2'
             .col-sm-10
               = f.fields_for :cells do |cell|

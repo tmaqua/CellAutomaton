@@ -1,0 +1,7 @@
+HelpHeight: "縦のセル数(1以上)"
+HelpWidth: "横のセル数(1以上)"
+HelpStep: "状態変化を何ステップ行うか(1以上)"
+HelpStateNum: "状態の数(1以上)<br>各状態に0からidが振られます<br>ex.状態数が2のときは0,1のidが振られます"
+HelpInitRule: "オートマトンの初期化処理<br>2次元配列init_array[Height][Width]に状態数を入れて下さい"
+HelpNeighborRule: "近傍則<br>次の状態を決定するための条件文を入力して下さい<br>使用可能な変数:<br>now_state: 現在の状態のid<br>now_array: 現在の状態を表す2次元配列<br>x, y: now_arrayのインデックス。now_array[y][x]<br>width, height: セルの縦横の数"
+HelpColor: "各状態を表す色"
