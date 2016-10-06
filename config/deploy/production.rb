@@ -6,3 +6,4 @@ set :ssh_options, {
   }
 
 set :branch, "master"
+role :web, "ishizaka-lab"
