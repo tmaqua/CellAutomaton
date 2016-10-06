@@ -26,6 +26,7 @@ gem 'bower-rails'
 
 gem 'devise'
 gem 'config'
+gem 'dotenv-rails'
 
 group :development, :test do
   gem 'byebug'
@@ -34,5 +35,14 @@ group :development, :test do
   gem 'json_expressions'
   gem 'rspec-rails'
   gem 'factory_girl_rails'
+end
+
+gem 'unicorn-worker-killer'
+group :production, :staging do
+  gem 'capistrano'
+  gem 'capistrano-bundler'
+  gem 'capistrano-rails'
+  gem 'capistrano-rbenv'
+  gem 'capistrano3-unicorn'
 end
 

@@ -24,6 +24,7 @@ capybara-*.html
 rerun.txt
 pickle-email-*.html
 .powenv
+.env
 
 ## Environment normalisation:
 /.bundle
