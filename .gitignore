@@ -38,6 +38,7 @@ bower.json
 
 ## CelAutomaton File's
 /public/cell_automatons/*
+!/public/cell_automatons/.keep
 
 config/settings.local.yml
 config/settings/*.local.yml

@@ -8,7 +8,7 @@ set :repo_url, 'https://github.com/tmaqua/CellAutomaton.git'
 set :deploy_to, "/var/www/rails/CellAutomaton"
 
 set :linked_files, fetch(:linked_files, []).push('.env')
-set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system')
+set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system', 'public/cell_automatons')
 
 set :keep_releases, 5
 
