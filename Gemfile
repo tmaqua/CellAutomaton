@@ -46,3 +46,7 @@ group :production, :staging do
   gem 'capistrano3-unicorn'
 end
 
+group :production do
+  gem 'mysql2', '~> 0.3.20'
+end
+
