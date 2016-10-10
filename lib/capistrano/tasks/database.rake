@@ -34,7 +34,7 @@ namespace :database do
   end
 
   desc 'db_reset must be run only one time right after the first deploy'
-  task :reset do
+  task :drop do
     on roles(:db) do |host|
       within current_path do
         with rails_env: fetch(:rails_env) do
