@@ -127,7 +127,7 @@ class CellAutomatonsController < ApplicationController
     def generate_function_board_init
       "
       def board_init(width, height)
-        init_array = Array.new(width){ Array.new(height){-1} }
+        init_array = Array.new(width){ Array.new(height){0} }
         #{@cell_automaton.init_rule}
         init_array
       end
