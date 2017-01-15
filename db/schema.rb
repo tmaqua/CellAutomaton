@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160925182240) do
+ActiveRecord::Schema.define(version: 20170115181540) do
 
   create_table "cell_automatons", force: :cascade do |t|
     t.string   "name"
@@ -20,12 +20,21 @@ ActiveRecord::Schema.define(version: 20160925182240) do
     t.integer  "state_num"
     t.integer  "init_type"
     t.text     "neighbor_rule"
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
-    t.integer  "user_id",       default: 0,  null: false
-    t.text     "init_rule",     default: "", null: false
-    t.integer  "width",         default: 1,  null: false
-    t.integer  "height",        default: 1,  null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+    t.integer  "user_id",       default: 0,     null: false
+    t.text     "init_rule",     default: "",    null: false
+    t.integer  "width",         default: 1,     null: false
+    t.integer  "height",        default: 1,     null: false
+    t.boolean  "pattern",       default: false, null: false
+  end
+
+  create_table "cell_variables", force: :cascade do |t|
+    t.string   "name"
+    t.float    "value"
+    t.integer  "cell_automaton_id"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
   end
 
   create_table "cells", force: :cascade do |t|
@@ -52,5 +61,13 @@ ActiveRecord::Schema.define(version: 20160925182240) do
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+
+  create_table "variables", force: :cascade do |t|
+    t.string   "name"
+    t.float    "value"
+    t.integer  "cell_automaton_id"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
 
 end
