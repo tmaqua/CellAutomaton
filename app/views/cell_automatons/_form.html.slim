@@ -41,11 +41,23 @@
             = f.label "初期化ルール", class: 'control-label col-sm-2'
             .col-sm-10.help data-toggle="tooltip" title="#{Settings.HelpInitRule}" data-html="true"
               = f.text_area :init_rule, class: 'form-control', rows: '12'
+
+          .form-group
+            = f.label "近傍則の拡張", class: 'control-label col-sm-2'
+            .col-sm-10.help data-toggle="tooltip" title="#{Settings.HelpNeighborRule}" data-html="true"
+              = f.check_box :pattern, {}, "extend", "default"
           
           .form-group
             = f.label "近傍則", class: 'control-label col-sm-2'
             .col-sm-10.help data-toggle="tooltip" title="#{Settings.HelpNeighborRule}" data-html="true"
               = f.text_area :neighbor_rule, class: 'form-control', rows: '12'
+
+          .form-group.help data-toggle="tooltip" title="#{Settings.HelpColor}" data-html="true"
+            = f.label "任意変数", class: 'control-label col-sm-2'
+            .col-sm-10
+              = f.fields_for :variables do |cell|
+                = render "variable_fields", f: cell
+              = link_to_add_fields "変数追加", f, :variables
           
           .form-group.help data-toggle="tooltip" title="#{Settings.HelpColor}" data-html="true"
             = f.label "状態の色", class: 'control-label col-sm-2'

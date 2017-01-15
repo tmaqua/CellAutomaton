@@ -9,9 +9,11 @@
               i.fa.fa-play
             = link_to edit_cell_automaton_path(cell_automaton), class: "btn btn-box-tool" do
               i.fa.fa-pencil
+            = link_to copy_cell_automaton_path(cell_automaton), class: "btn btn-box-tool", data: {:confirm => 'コピーしますか?'} do
+              i.fa.fa-files-o
             button.btn.btn-box-tool data-widget="collapse" 
               i.fa.fa-minus
-            = link_to cell_automaton, data: {:confirm => '削除してよろしいですか?'}, :method => :delete do
+            = link_to cell_automaton, data: {:confirm => '削除してよろしいですか?'}, class: "btn btn-box-tool", :method => :delete do
               i.fa.fa-times
         .box-body.no-padding
           .row

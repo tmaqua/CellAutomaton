@@ -2,7 +2,7 @@ require "open3"
 
 class CellAutomatonsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_cell_automaton, only: [:show, :edit, :update, :destroy]
+  before_action :set_cell_automaton, only: [:show, :edit, :update, :destroy, :copy]
 
   # GET /cell_automatons
   def index
@@ -30,6 +30,7 @@ class CellAutomatonsController < ApplicationController
   def new
     @cell_automaton = CellAutomaton.new
     2.times{ @cell_automaton.cells.build }
+    2.times{ @cell_automaton.variables.build}
   end
 
   # GET /cell_automatons/1/edit
@@ -70,6 +71,28 @@ class CellAutomatonsController < ApplicationController
     redirect_to cell_automatons_url, notice: 'Cell automaton was successfully destroyed.'
   end
 
+  def copy
+    new_cell_automaton = @cell_automaton.dup
+    new_cell_automaton.name = @cell_automaton.name + "- copy"
+    new_cell_automaton.save
+
+    colors = @cell_automaton.cells
+    colors.each do |color|
+      new_color = color.dup
+      new_color.cell_automaton_id = new_cell_automaton.id
+      new_color.save
+    end
+
+    variables = @cell_automaton.variables
+    variables.each do |variable|
+      new_variable = variable.dup
+      new_variable.cell_automaton_id = new_cell_automaton.id
+      new_variable.save
+    end
+
+    redirect_to cell_automatons_url, notice: 'Cell automaton was successfully copied.'
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_cell_automaton
@@ -79,9 +102,12 @@ class CellAutomatonsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def cell_automaton_params
       params.require(:cell_automaton).permit(
-        :name, :board_size, :step, :state_num, :init_type, :neighbor_rule, :init_rule, :width, :height,
+        :name, :board_size, :step, :state_num, :init_type, :neighbor_rule, :init_rule, :width, :height, :pattern,
         cells_attributes: [
           :id, :cell_automaton_id, :color, :_destroy
+        ],
+        variables_attributes: [
+          :id, :name, :value, :_destroy
         ]
       )
     end
@@ -138,14 +164,26 @@ class CellAutomatonsController < ApplicationController
       "
       def calc_automaton(init_array, step, width, height)
         result = [init_array]
+        self_variables = {}
+        #{@cell_automaton.variables.pluck(:name, :value)}.each do |variable|
+          self_variables.store(variable[0], variable[1])
+        end
+        self_variables = self_variables.map{|k,v| [k.to_sym, v] }.to_h
+
         step.times do |n|
           old_array = result[n]
           new_array = Array.new(width){Array.new(height)}
-          old_array.each_with_index do |old_array_row, y|
-            old_array_row.each_with_index do |now_state, x|
-              new_array[y][x] = judge_next_state(count_true_state(old_array, y, x), now_state, old_array, x, y, width, height)
+
+          if #{@cell_automaton.default?}
+            old_array.each_with_index do |old_array_row, y|
+              old_array_row.each_with_index do |now_state, x|
+                new_array[y][x] = judge_next_state(count_true_state(old_array, y, x), now_state, old_array, x, y, width, height)
+              end
             end
+          else
+            #{@cell_automaton.neighbor_rule}
           end
+
           result.push(new_array)
         end
         result
@@ -156,6 +194,9 @@ class CellAutomatonsController < ApplicationController
     def generate_function_judge_next_state
       "
       def judge_next_state(state_count, now_state, now_array, x, y, width, height)
+        count_state_temp = count_state(now_array, y, x, now_state, width, height)
+        count = count_state_temp[:count]
+        neighbor_array = count_state_temp[:array]
         #{@cell_automaton.neighbor_rule}
       end
       "
@@ -180,6 +221,47 @@ class CellAutomatonsController < ApplicationController
         
         counter
       end
+
+      def count_state(array, y, x, state, width, height)
+        count = 0
+        y_1x_1 = (x==0       || y==0)? -1 : array[y-1][x-1]
+        y_1x_0 = (y==0              )? -1 : array[y-1][x]
+        y_1xp1 = (x==width-1 || y==0)? -1 : array[y-1][x+1]
+        y_1 = [y_1x_1, y_1x_0, y_1xp1]
+        y_1.each do |elm|
+          count = count+1 if elm == state
+        end
+
+        y_0x_1 = (x==0)? -1 : array[y][x-1]
+        y_0x_0 = array[y][x]
+        y_0xp1 = (x==width-1)? -1 : array[y][x+1]
+        y_0 = [y_0x_1, y_0x_0, y_0xp1]
+        y_0.each do |elm|
+          count = count+1 if elm == state
+        end
+
+        yp1x_1 = (x==0       || y==height-1)? -1 : array[y+1][x-1]
+        yp1x_0 = (              y==height-1)? -1 : array[y+1][x]
+        yp1xp1 = (x==width-1 || y==height-1)? -1 : array[y+1][x+1]
+        yp1 = [yp1x_1, yp1x_0, yp1xp1]
+        yp1.each do |elm|
+          count = count+1 if elm == state
+        end
+        result = {count: count, array: [y_1, y_0, yp1]}
+      end
+
+      def check_state_for_array(array, state)
+        3.times do |y|
+          3.times do |x|
+            if array[y][x] == state
+              return true
+            end
+          end
+        end
+        return false
+      end
+
+
       "
     end
 
