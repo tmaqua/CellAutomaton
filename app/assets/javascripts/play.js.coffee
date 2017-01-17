@@ -6,6 +6,7 @@ playingStep = 0
 wait = 0
 stateNum = 3
 colors = ['white', 'gray', 'red']
+logs = []
 
 
 $('.cell_automatons.show').ready -> 
@@ -17,6 +18,7 @@ $('.cell_automatons.show').ready ->
   playingStep = 0
   wait = 0
   colors = gon.colors
+  logs = gon.logs
   createCellTable(rowNum,columnNum)
   $('#playButton').click ->
     playAutomatonAll(step, playingStep)
@@ -52,6 +54,7 @@ createCellTable = (rowNum, columnNum) ->
 playAutomaton = (arrayIndex) ->
   playingStep = arrayIndex
 
+  showLogs(playingStep)
   tr = $('#cells tbody tr')
   tempArray = array[arrayIndex]
   for i in [0..rowNum-1]
@@ -73,4 +76,14 @@ playAutomatonAll = (step, playingStep) ->
         button.attr("disabled", false)
     ), 500
 
+showLogs = (playingStep) ->
+  logArea = $("#logs")
+  logg = logs[playingStep]
+  logStr = "ステップ数: #{playingStep}\n"
+
+  for i in [0...stateNum]
+    temp = logg["#{i}"]
+    logStr = logStr + "状態#{i}の数: #{temp}\n"
+
+  logArea.val(logStr)
 

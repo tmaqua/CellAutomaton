@@ -17,13 +17,24 @@ class CellAutomatonsController < ApplicationController
   def show
     file_path = Rails.root.join("public", "cell_automatons", "#{current_user.id}")
     file_name = file_path.to_s + "/" + @cell_automaton.id.to_s
+    d3_array = execute_ruby_file(file_name)
 
-    gon.array = execute_ruby_file(file_name)
+    gon.array = d3_array
+    gon.logs = get_array_state(d3_array)
     gon.rowNum = @cell_automaton.height
     gon.columnNum = @cell_automaton.width
     gon.step = @cell_automaton.step+1
     gon.stateNum = @cell_automaton.state_num
     gon.colors = @cell_automaton.cells.pluck(:color)
+  end
+
+  def get_array_state(d3)
+    logs = []
+    d3.each do |d2|
+      logs.push(d2.flatten.inject(Hash.new(0)){|hash, a| hash[a] += 1; hash})
+    end
+
+    logs
   end
 
   # GET /cell_automatons/new
