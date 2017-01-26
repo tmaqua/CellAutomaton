@@ -6,15 +6,15 @@
           h3.box-title = cell_automaton.name
           .box-tools.pull-right
             = link_to cell_automaton_path(cell_automaton), class: "btn btn-box-tool" do
-              i.fa.fa-play
+              i.fa.fa-play data-toggle="tooltip" title="動作確認" data-html="true"
             = link_to edit_cell_automaton_path(cell_automaton), class: "btn btn-box-tool" do
-              i.fa.fa-pencil
+              i.fa.fa-pencil data-toggle="tooltip" title="編集" data-html="true"
             = link_to copy_cell_automaton_path(cell_automaton), class: "btn btn-box-tool", data: {:confirm => 'コピーしますか?'} do
-              i.fa.fa-files-o
+              i.fa.fa-files-o data-toggle="tooltip" title="コピー" data-html="true"
             button.btn.btn-box-tool data-widget="collapse" 
-              i.fa.fa-minus
+              i.fa.fa-minus data-toggle="tooltip" title="たたむ" data-html="true"
             = link_to cell_automaton, data: {:confirm => '削除してよろしいですか?'}, class: "btn btn-box-tool", :method => :delete do
-              i.fa.fa-times
+              i.fa.fa-times data-toggle="tooltip" title="削除" data-html="true"
         .box-body.no-padding
           .row
             .col-md-9.col-sm-8

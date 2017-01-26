@@ -188,7 +188,7 @@ class CellAutomatonsController < ApplicationController
           if #{@cell_automaton.default?}
             old_array.each_with_index do |old_array_row, y|
               old_array_row.each_with_index do |now_state, x|
-                new_array[y][x] = judge_next_state(count_true_state(old_array, y, x), now_state, old_array, x, y, width, height)
+                new_array[y][x] = judge_next_state(count_true_state(old_array, y, x), now_state, old_array, x, y, width, height,self_variables)
               end
             end
           else
@@ -204,7 +204,7 @@ class CellAutomatonsController < ApplicationController
 
     def generate_function_judge_next_state
       "
-      def judge_next_state(state_count, now_state, now_array, x, y, width, height)
+      def judge_next_state(state_count, now_state, now_array, x, y, width, height,self_variables)
         count_state_temp = count_state(now_array, y, x, now_state, width, height)
         count = count_state_temp[:count]
         neighbor_array = count_state_temp[:array]
