@@ -27,6 +27,7 @@ gem 'bower-rails'
 gem 'devise'
 gem 'config'
 gem 'dotenv-rails'
+gem 'seed_dump'
 
 group :development, :test do
   gem 'byebug'
